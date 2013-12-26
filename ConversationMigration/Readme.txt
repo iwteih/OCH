@@ -1,0 +1,2 @@
+﻿This project is to import "Outlook Conversation History" to the database used by OCH.
+GenConversationToXml.bas is the VBA script to generate mails to XML file. You should enable Develop tab in Outlook then import this VBA script.

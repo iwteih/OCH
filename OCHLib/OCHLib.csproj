@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{49F2F68D-9C79-4DE3-8DFC-A0F7A1A33A5A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>OCHLib</RootNamespace>
+    <AssemblyName>OCHLib</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Interop.CommunicatorAPI">
+      <HintPath>..\Lib\Interop.CommunicatorAPI.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Interop.CommunicatorPrivate">
+      <HintPath>..\Lib\Interop.CommunicatorPrivate.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\Lib\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="EventArgs\ConnectionStateChangedEventArgs.cs" />
+    <Compile Include="EventArgs\ContactAddedToGroupEventArgs.cs" />
+    <Compile Include="EventArgs\ContactBlockChangeEventArgs.cs" />
+    <Compile Include="EventArgs\ContactFriendlyNameChangeEventArgs.cs" />
+    <Compile Include="EventArgs\ContactListAddEventArgs.cs" />
+    <Compile Include="EventArgs\ContactListRemoveEventArgs.cs" />
+    <Compile Include="EventArgs\ContactPagerChangeEventArgs.cs" />
+    <Compile Include="EventArgs\ContactPhoneChangeEventArgs.cs" />
+    <Compile Include="EventArgs\ContactPropertyChangeEventArgs.cs" />
+    <Compile Include="EventArgs\ContactRemovedFromGroupEventArgs.cs" />
+    <Compile Include="EventArgs\ContactResolvedEventArgs.cs" />
+    <Compile Include="EventArgs\ContactStatusChangeEventArgs.cs" />
+    <Compile Include="EventArgs\GroupAddedEventArgs.cs" />
+    <Compile Include="EventArgs\GroupNameChangedEventArgs.cs" />
+    <Compile Include="EventArgs\GroupRemovedEventArgs.cs" />
+    <Compile Include="EventArgs\IMWindowContactAddedEventArgs.cs" />
+    <Compile Include="EventArgs\IMWindowContactRemovedEventArgs.cs" />
+    <Compile Include="EventArgs\IMWindowCreatedEventArgs.cs" />
+    <Compile Include="EventArgs\IMWindowDestroyedEventArgs.cs" />
+    <Compile Include="EventArgs\MyFriendlyNameChangeEventArgs.cs" />
+    <Compile Include="EventArgs\MyPhoneChangeEventArgs.cs" />
+    <Compile Include="EventArgs\MyPropertyChangeEventArgs.cs" />
+    <Compile Include="EventArgs\MyStatusChangeEventArgs.cs" />
+    <Compile Include="EventArgs\SigninEventArgs.cs" />
+    <Compile Include="EventArgs\UnreadEmailChangeEventArgs.cs" />
+    <Compile Include="OCHMessage.cs" />
+    <Compile Include="OCAutomation.cs" />
+    <Compile Include="OCMessageWindow.cs" />
+    <Compile Include="OCDaemon.cs" />
+    <Compile Include="Resources.Designer.cs">
+      <DependentUpon>Resources.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\IOCH\IOCH.csproj">
+      <Project>{67f34251-e935-4a98-9117-df9a9fdb8587}</Project>
+      <Name>IOCH</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OCHUtil\OCHUtil.csproj">
+      <Project>{60d4a903-8e7a-478d-8773-7c08d7b1bdee}</Project>
+      <Name>OCHUtil</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
