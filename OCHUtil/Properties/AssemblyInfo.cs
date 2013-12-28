@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("StringCompressSevenZipSharp")]
+[assembly: AssemblyTitle("OCHUtil")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("EMC Corporation")]
-[assembly: AssemblyProduct("StringCompressSevenZipSharp")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("OCHUtil")]
 [assembly: AssemblyCopyright("Copyright © EMC Corporation 2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

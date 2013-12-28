@@ -215,7 +215,11 @@ namespace OCHLib
             try
             {
                 this.isConnected = false;
-                this.automation.ShutdownApp();
+
+                if (automation != null)
+                {
+                    this.automation.ShutdownApp();
+                }
 
                 notify.OCNotRuning();
             }

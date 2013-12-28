@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("ConversationImport")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("EMC Corporation")]
+[assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("ConversationImport")]
-[assembly: AssemblyCopyright("Copyright © EMC Corporation 2013")]
+[assembly: AssemblyCopyright("Copyright © iwteih@hotmail.com 2013-2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
