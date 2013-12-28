@@ -49,9 +49,15 @@ namespace OCH_Win
             messageProvider = new DailyMessageProvider(messageStore);
 
             webBrowser.DocumentCompleted += webBrowser_DocumentCompleted;
+            pnWebbrowser.MouseEnter += pnWebbrowser_MouseEnter;
 
             loadWorker.DoWork += loadWorker_DoWork;
             loadWorker.RunWorkerCompleted += loadWorker_RunWorkerCompleted;
+        }
+
+        void pnWebbrowser_MouseEnter(object sender, EventArgs e)
+        {
+            webBrowser.Focus();
         }
 
         void loadWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)

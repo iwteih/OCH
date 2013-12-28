@@ -48,7 +48,6 @@
             this.btnLastPage = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.lbDayCount = new System.Windows.Forms.ToolStripLabel();
-            this.webBrowser = new System.Windows.Forms.WebBrowser();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnReturnDailyView = new System.Windows.Forms.Button();
             this.btnSearch = new System.Windows.Forms.Button();
@@ -57,6 +56,8 @@
             this.dateTimePickerTo = new System.Windows.Forms.DateTimePicker();
             this.label1 = new System.Windows.Forms.Label();
             this.dateTimePickerFrom = new System.Windows.Forms.DateTimePicker();
+            this.pnWebbrowser = new System.Windows.Forms.Panel();
+            this.webBrowser = new System.Windows.Forms.WebBrowser();
             this.contextMenu.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -67,6 +68,7 @@
             this.panel2.SuspendLayout();
             this.toolStrip.SuspendLayout();
             this.panel1.SuspendLayout();
+            this.pnWebbrowser.SuspendLayout();
             this.SuspendLayout();
             // 
             // notifyIcon
@@ -163,7 +165,7 @@
             // 
             // splitContainer2.Panel2
             // 
-            this.splitContainer2.Panel2.Controls.Add(this.webBrowser);
+            this.splitContainer2.Panel2.Controls.Add(this.pnWebbrowser);
             this.splitContainer2.Size = new System.Drawing.Size(663, 456);
             this.splitContainer2.SplitterDistance = 221;
             this.splitContainer2.TabIndex = 1;
@@ -255,15 +257,6 @@
             this.lbDayCount.Name = "lbDayCount";
             this.lbDayCount.Size = new System.Drawing.Size(0, 22);
             // 
-            // webBrowser
-            // 
-            this.webBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.webBrowser.Location = new System.Drawing.Point(0, 0);
-            this.webBrowser.MinimumSize = new System.Drawing.Size(20, 20);
-            this.webBrowser.Name = "webBrowser";
-            this.webBrowser.Size = new System.Drawing.Size(438, 456);
-            this.webBrowser.TabIndex = 3;
-            // 
             // panel1
             // 
             this.panel1.Controls.Add(this.btnReturnDailyView);
@@ -343,6 +336,24 @@
             this.dateTimePickerFrom.Size = new System.Drawing.Size(128, 20);
             this.dateTimePickerFrom.TabIndex = 1;
             // 
+            // pnWebbrowser
+            // 
+            this.pnWebbrowser.Controls.Add(this.webBrowser);
+            this.pnWebbrowser.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnWebbrowser.Location = new System.Drawing.Point(0, 0);
+            this.pnWebbrowser.Name = "pnWebbrowser";
+            this.pnWebbrowser.Size = new System.Drawing.Size(438, 456);
+            this.pnWebbrowser.TabIndex = 0;
+            // 
+            // webBrowser
+            // 
+            this.webBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.webBrowser.Location = new System.Drawing.Point(0, 0);
+            this.webBrowser.MinimumSize = new System.Drawing.Size(20, 20);
+            this.webBrowser.Name = "webBrowser";
+            this.webBrowser.Size = new System.Drawing.Size(438, 456);
+            this.webBrowser.TabIndex = 4;
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -370,6 +381,7 @@
             this.toolStrip.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.pnWebbrowser.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -396,13 +408,14 @@
         private System.Windows.Forms.DateTimePicker dateTimePickerTo;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DateTimePicker dateTimePickerFrom;
-        private System.Windows.Forms.WebBrowser webBrowser;
         private System.Windows.Forms.ToolStripMenuItem btnAutoStart;
         private System.Windows.Forms.ToolStripLabel lbDayCount;
         private System.Windows.Forms.ListBox listBoxContract;
         private System.Windows.Forms.Button btnReturnDailyView;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ListBox listBoxDate;
+        private System.Windows.Forms.Panel pnWebbrowser;
+        private System.Windows.Forms.WebBrowser webBrowser;
     }
 }
 
