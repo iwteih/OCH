@@ -60,11 +60,23 @@ namespace OCHLib
 
         public static bool CheckCommunicatorUpAndRunning()
         {
-            _communicatorUpAndRunning = 0;
-            _communicatorUpAndRunning = Convert.ToInt32(Microsoft.Win32.Registry.CurrentUser
-                .OpenSubKey("Software").OpenSubKey("IM Providers").OpenSubKey("Communicator").GetValue("UpAndRunning", 1));
+            try
+            {
+                _communicatorUpAndRunning = 0;
+                _communicatorUpAndRunning = Convert.ToInt32(Microsoft.Win32.Registry.CurrentUser
+                    .OpenSubKey("Software")
+                    .OpenSubKey("IM Providers")
+                    .OpenSubKey("Communicator")
+                    .GetValue("UpAndRunning", 1));
 
-            return _communicatorUpAndRunning == 2;
+                return _communicatorUpAndRunning == 2;
+            }
+            catch (Exception exp)
+            {
+                Console.WriteLine(exp);
+
+                return false;
+            }
         }
 
         /// <summary>
