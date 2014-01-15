@@ -40,7 +40,7 @@ namespace OCHUtil
         {
             List<string> list = new List<string>();
 
-            UInt32 arraySize = 120;
+            UInt32 arraySize = 1024;
             UInt32 arrayBytesSize = arraySize * sizeof(UInt32);
             UInt32[] processIds = new UInt32[arraySize];
             UInt32 bytesCopied;

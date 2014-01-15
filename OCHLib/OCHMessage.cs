@@ -54,19 +54,22 @@ namespace OCHLib
         private void BindOCAutomationEvent()
         {
             if (isEventBinded)
+            {
                 return;
+            }
 
             try
             {
+                automation = OCAutomation.GetInstance();
 
-                this.automation = OCAutomation.GetInstance();
-                //automation.ConnectionStateChanged -= new EventHandler<ConnectionStateChangedEventArgs>(ConnectionStateChanged);
+                automation.ConnectionStateChanged -= new EventHandler<ConnectionStateChangedEventArgs>(ConnectionStateChanged);
+                automation.IMWindowContactAdded -= new EventHandler<IMWindowContactAddedEventArgs>(IMWindowContactAdded);
+                automation.IMWindowCreated -= new EventHandler<IMWindowCreatedEventArgs>(IMWindowCreated);
+                automation.IMWindowDestroyed -= new EventHandler<IMWindowDestroyedEventArgs>(IMWindowDestroyed);
+                automation.Signin -= new EventHandler<SigninEventArgs>(Signin);
+                automation.Signout -= new EventHandler<EventArgs>(Signout);
+
                 automation.ConnectionStateChanged += new EventHandler<ConnectionStateChangedEventArgs>(ConnectionStateChanged);
-                //automation.IMWindowContactAdded -= new EventHandler<IMWindowContactAddedEventArgs>(IMWindowContactAdded);
-                //automation.IMWindowCreated -= new EventHandler<IMWindowCreatedEventArgs>(IMWindowCreated);
-                //automation.IMWindowDestroyed -= new EventHandler<IMWindowDestroyedEventArgs>(IMWindowDestroyed);
-                //automation.Signin -= new EventHandler<SigninEventArgs>(Signin);
-                //automation.Signout -= new EventHandler<EventArgs>(Signout);
                 automation.IMWindowContactAdded += new EventHandler<IMWindowContactAddedEventArgs>(IMWindowContactAdded);
                 automation.IMWindowCreated += new EventHandler<IMWindowCreatedEventArgs>(IMWindowCreated);
                 automation.IMWindowDestroyed += new EventHandler<IMWindowDestroyedEventArgs>(IMWindowDestroyed);
@@ -77,6 +80,7 @@ namespace OCHLib
             }
             catch (Exception exception)
             {
+                isEventBinded = false;
                 logger.Error(exception);
             }
         }
@@ -96,6 +100,7 @@ namespace OCHLib
             {
                 logger.Error(exception);
             }
+
             return null;
         }
 
@@ -179,11 +184,11 @@ namespace OCHLib
                 if (window != null)
                 {
                     window.Stop();
-                    this.messageWindowList.Remove(window);
+                    messageWindowList.Remove(window);
                 }
                 else
                 {
-                    logger.Warn("Cannot retrieve IMWindow");
+                    Console.WriteLine("Cannot retrieve IMWindow");
                 }
             }
             catch (Exception exception)
@@ -214,7 +219,7 @@ namespace OCHLib
         {
             try
             {
-                this.isConnected = false;
+                isEventBinded = false;
 
                 if (automation != null)
                 {
@@ -236,9 +241,8 @@ namespace OCHLib
                 BindOCAutomationEvent();
                 string textStatus = automation.GetTextStatus(automation.GetSignedInUser());
 
-                if ((this.isConnected 
-                    && (textStatus != "Unknown"))
-                    && (textStatus != "Offline"))
+                if (textStatus != "Unknown"
+                    && textStatus != "Offline")
                 {
                     notify.Connected();
                 }

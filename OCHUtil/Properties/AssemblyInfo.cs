@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("OCHUtil")]
-[assembly: AssemblyCopyright("Copyright © EMC Corporation 2013")]
+[assembly: AssemblyCopyright("Copyright © iwteih@hotmail.com 2013-2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

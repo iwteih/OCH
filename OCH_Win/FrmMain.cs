@@ -505,7 +505,7 @@ namespace OCH_Win
 
             try
             {
-                HKLM = Registry.LocalMachine;
+                HKLM = Registry.CurrentUser;
                 Run = HKLM.CreateSubKey(REGISTRYPATH);
 
                 if (started)
@@ -542,24 +542,27 @@ namespace OCH_Win
             return success;
         }
 
+
         private bool IsRegeditExisted(string name)
         {
             bool existed = false;
 
-            RegistryKey hkml = Registry.LocalMachine;
-            RegistryKey software = null;
-
             try
             {
-                string[] subkeyNames;
+                string[] subkeyNames = Microsoft.Win32.Registry.CurrentUser
+                            .OpenSubKey("Software")
+                            .OpenSubKey("Microsoft")
+                            .OpenSubKey("Windows")
+                            .OpenSubKey("CurrentVersion")
+                            .OpenSubKey("Run")
+                            .GetValueNames();
 
-                software = hkml.OpenSubKey(REGISTRYPATH, true);
-                subkeyNames = software.GetValueNames();
                 foreach (string keyName in subkeyNames)
                 {
                     if (keyName == name)
                     {
                         existed = true;
+                        break;
                     }
                 }
             }
@@ -567,21 +570,10 @@ namespace OCH_Win
             {
                 logger.Error(exp);
             }
-            finally
-            {
-                if (hkml != null)
-                {
-                    hkml.Close();
-                }
-
-                if (software != null)
-                {
-                    software.Close();
-                }
-            }
 
             return existed;
         }
+
         #endregion
 
         private void txtSearchContent_KeyDown(object sender, KeyEventArgs e)
@@ -591,8 +583,6 @@ namespace OCH_Win
                 Search();
             }
         }
-
-
 
     }
 }

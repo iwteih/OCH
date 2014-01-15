@@ -52,16 +52,19 @@ namespace OCHLib
                 return this.ocState;
             }
         }
-        
+
         private void ProcessMethod()
         {
             while (isRuning)
             {
                 try
                 {
-
-                    if(enumProcesses.ShowAllProcessName().Contains("communicator.exe"))
                     //if (Process.GetProcessesByName("communicator").Length > 0)//RAM goes up and down when using Process.GetProcessesByName
+                    //var processList = enumProcesses.ShowAllProcessName();
+
+                    //if (processList.Contains("communicator.exe"))
+
+                    if(OCAutomation.CheckCommunicatorUpAndRunning())
                     {
                         if ((this.ocState == OCStatus.Unknown) || (this.ocState == OCStatus.NotRunning))
                         {

@@ -48,11 +48,23 @@ namespace OCHLib
         /// </summary>
         public static OCAutomation GetInstance()
         {
-            _instance = new OCAutomation();
+            if (_instance == null)
+            {
+                _instance = new OCAutomation();
+            }
 
             _instance.Connect();
 
             return _instance;
+        }
+
+        public static bool CheckCommunicatorUpAndRunning()
+        {
+            _communicatorUpAndRunning = 0;
+            _communicatorUpAndRunning = Convert.ToInt32(Microsoft.Win32.Registry.CurrentUser
+                .OpenSubKey("Software").OpenSubKey("IM Providers").OpenSubKey("Communicator").GetValue("UpAndRunning", 1));
+
+            return _communicatorUpAndRunning == 2;
         }
 
         /// <summary>
@@ -164,11 +176,7 @@ namespace OCHLib
             {
                 // Check if Office Communicator is up and running
                 //
-                _communicatorUpAndRunning = 0;
-                _communicatorUpAndRunning = Convert.ToInt32(Microsoft.Win32.Registry.CurrentUser
-                    .OpenSubKey("Software").OpenSubKey("IM Providers").OpenSubKey("Communicator").GetValue("UpAndRunning", 1));
-
-                if (_communicatorUpAndRunning != 2)
+                if (!CheckCommunicatorUpAndRunning())
                     return;
 
                 // Create Communicator objects
