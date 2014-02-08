@@ -19,12 +19,12 @@ namespace OCHLib
 
     class OCDaemon
     {
-        private Thread deamonThread;
         private bool isRuning = true;
         private int sleepTime = 500;
         private OCStatus ocState = OCStatus.Unknown;
+        private System.Timers.Timer timer = null;
         private static readonly ILog logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-
+        
         public delegate void ProcessOfflineHeadle(object sender, OCStatus state);
         public delegate void ProcessOnlineHeadle(object sender, OCStatus state);
 
@@ -55,53 +55,60 @@ namespace OCHLib
 
         private void ProcessMethod()
         {
-            while (isRuning)
+            try
             {
-                try
+                //if (Process.GetProcessesByName("communicator").Length > 0)//RAM goes up and down when using Process.GetProcessesByName
+                
+                //var processList = enumProcesses.ShowAllProcessName();
+                //if (processList.Contains("communicator.exe"))
+
+                if (OCAutomation.CheckCommunicatorUpAndRunning())
                 {
-                    //if (Process.GetProcessesByName("communicator").Length > 0)//RAM goes up and down when using Process.GetProcessesByName
-                    //var processList = enumProcesses.ShowAllProcessName();
-
-                    //if (processList.Contains("communicator.exe"))
-
-                    if(OCAutomation.CheckCommunicatorUpAndRunning())
+                    if ((this.ocState == OCStatus.Unknown) || (this.ocState == OCStatus.NotRunning))
                     {
-                        if ((this.ocState == OCStatus.Unknown) || (this.ocState == OCStatus.NotRunning))
-                        {
-                            this.ocState = OCStatus.Running;
-                            this.OnCommunicatorRuning(this, OCStatus.Running);
-                        }
+                        this.ocState = OCStatus.Running;
+                        this.OnCommunicatorRuning(this, OCStatus.Running);
                     }
-                    else
-                    {
-                        ocState = OCStatus.NotRunning;
-
-                        if (OnCommunicatorNotRuning != null)
-                        {
-                            this.OnCommunicatorNotRuning(this, OCStatus.NotRunning);
-                        }
-                    }                    
                 }
-                catch (Exception exception)
+                else
                 {
-                    logger.Error(exception);
-                }
+                    ocState = OCStatus.NotRunning;
 
-                Thread.Sleep(sleepTime);
+                    if (OnCommunicatorNotRuning != null)
+                    {
+                        this.OnCommunicatorNotRuning(this, OCStatus.NotRunning);
+                    }
+                }
             }
+            catch (Exception exception)
+            {
+                logger.Error(exception);
+            }
+
+            Thread.Sleep(sleepTime);
         }
 
-        public void Run()
+        public void Start()
         {
-            deamonThread = new Thread(new ThreadStart(this.ProcessMethod));
-            deamonThread.Start();
+            isRuning = true;
+            timer = new System.Timers.Timer(sleepTime);
+            timer.Elapsed += timer_Elapsed;
+            timer.Start();
         }
 
         public void Stop()
         {
-            isRuning = false;
-            deamonThread.Abort();
+            if (timer != null)
+            {
+                timer.Stop();
+                timer.Dispose();
+                timer = null;
+            }
         }
 
+        void timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            ProcessMethod();
+        }
     }
 }

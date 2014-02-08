@@ -9,6 +9,7 @@ using Community.CsharpSqlite.SQLiteClient;
 using System.IO;
 using System.Diagnostics;
 using log4net;
+using System.Reflection;
 
 namespace MessageStoreImpl
 {
@@ -21,18 +22,10 @@ namespace MessageStoreImpl
 
         public SQLite(string database = null)
         {
-            if (string.IsNullOrEmpty(database))
-            {
-                database = "OCH.db";
-            }
-
             string appStartPath = System.IO.Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName);
             DATABASE_NAME = string.Format("{0}", Path.Combine(appStartPath, database));
 
-            if (!File.Exists(DATABASE_NAME))
-            {
-                throw new FileNotFoundException("Cannot find sqlite database: {0}", DATABASE_NAME);
-            }
+            LoadDatabaseToDisk(DATABASE_NAME);
 
             DATABASE_NAME = string.Format("Version=3,uri=file:{0}", DATABASE_NAME);
         }
@@ -42,6 +35,36 @@ namespace MessageStoreImpl
         {
             get { return pageSize; }
             set { pageSize = value; }
+        }
+
+        private bool LoadDatabaseToDisk(string database)
+        {
+            if (!File.Exists(database))
+            {
+                try
+                {
+                    System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
+                    using (Stream stream = assembly.GetManifestResourceStream("MessageStoreImpl" + ".OCH.db"))
+                    {
+                        if (stream == null)
+                            throw new Exception("OCH.db doesn't exists");
+
+                        byte[] bytes = new byte[stream.Length];
+                        stream.Position = 0;
+                        stream.Read(bytes, 0, (int)stream.Length);
+                        
+                        File.WriteAllBytes(database, bytes);
+                    }
+
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+
+            return false;
         }
 
         public void SaveMessage(DateTime beginTime, string messageBody, string[] contracts)

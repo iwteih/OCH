@@ -205,13 +205,24 @@ namespace OCHLib
                 daemon.OnCommunicatorRuning += daemon_OnCommunicatorRuning;
                 daemon.OnCommunicatorNotRuning += daemon_OnCommunicatorNotRuning;
 
-                daemon.Run();
+                daemon.Start();
 
                 //BindOCAutomationEvent();
             }
             catch (Exception exception)
             {
                 logger.Error(exception);
+            }
+        }
+
+        public void StopRecord()
+        {
+            if (daemon != null)
+            {
+                daemon.OnCommunicatorRuning -= daemon_OnCommunicatorRuning;
+                daemon.OnCommunicatorNotRuning -= daemon_OnCommunicatorNotRuning;
+
+                daemon.Stop();
             }
         }
 

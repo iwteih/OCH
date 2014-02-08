@@ -19,6 +19,7 @@ namespace OCH_Win
 {
     public partial class FrmMain : Form, INotify
     {
+        private OCHMessage och = null;
         private IMessageStore messageStore = null;
         private MessageProvider messageProvider = null;
         private Contact selectedContract = null;
@@ -43,7 +44,7 @@ namespace OCH_Win
 
         private void Initialize()
         {
-            messageStore = new MessageStoreImpl.SQLite();
+            messageStore = new MessageStoreImpl.SQLite(Environment.UserName);
             //messageStore = new MessageStoreImpl.SQL();
             //messageStore = new MessageStoreImpl.STSdb(Environment.UserName);
             messageProvider = new DailyMessageProvider(messageStore);
@@ -84,7 +85,11 @@ namespace OCH_Win
         {
             string user = Environment.UserName;
 
-            OCHMessage och = new OCHMessage(messageStore, this);
+            if (och == null)
+            {
+                och = new OCHMessage(messageStore, this);
+            }
+            
             och.StartRecord();
         }
 
@@ -106,6 +111,14 @@ namespace OCH_Win
             };
         }
 
+        private void StopRecord()
+        {
+            if (och != null)
+            {
+                och.StopRecord();
+            }
+        }
+
         private void FrmMain_Load(object sender, EventArgs e)
         {
             this.Visible = false;
@@ -125,8 +138,15 @@ namespace OCH_Win
 
         private void FrmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            e.Cancel = true;
-            this.Visible = false;
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                e.Cancel = true;
+                this.Visible = false;
+            }
+            else
+            {
+                StopRecord();
+            }
         }
 
         private void toolStripView_Click(object sender, EventArgs e)
@@ -136,7 +156,9 @@ namespace OCH_Win
 
         private void toolStripExit_Click(object sender, EventArgs e)
         {
-            Environment.Exit(0);
+            StopRecord();
+            //Environment.Exit(0);
+            Application.Exit();
         }
 
         private void AddToListView(IEnumerable<Contact> list)
@@ -150,11 +172,6 @@ namespace OCH_Win
                     listBoxContract.Items.Add(item);
                 }
             }
-
-            //if (listBoxContract.Items.Count == 1)
-            //{
-            //    listBoxContract.SetSelected(0, true);
-            //}
         }
 
         private void LoadContracts()
